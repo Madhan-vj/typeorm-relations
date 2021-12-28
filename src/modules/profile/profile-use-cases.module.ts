@@ -4,6 +4,7 @@ import { CreateProfileMapper } from './create-profile/create-profile-mapper';
 import { CreateProfileController } from './create-profile/create-profile.controller';
 import { getProfileMapper } from './get-profile-list/get-profile-list-mapper';
 import { GetProfileController } from './get-profile-list/get-profile-list.controller';
+import { updateProfileMapper } from './update-profile/update-profile-mapper';
 import { UpdateProfileController } from './update-profile/update-profile.controller';
 
 @Module({
@@ -11,8 +12,8 @@ import { UpdateProfileController } from './update-profile/update-profile.control
  controllers: [
   GetProfileController,
   CreateProfileController,
-  UpdateProfileController
+  UpdateProfileController,
  ],
- providers: [CreateProfileMapper, getProfileMapper],
+ providers: [CreateProfileMapper, getProfileMapper, updateProfileMapper],
 })
 export class ProfileUseCasesModule { }
