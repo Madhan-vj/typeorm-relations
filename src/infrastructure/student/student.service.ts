@@ -20,6 +20,15 @@ export class StudentService
   queryBuilder.leftJoinAndSelect('s.college', 'sc');
   queryBuilder.leftJoinAndSelect('s.profile', 'sp');
   return queryBuilder.getMany();
+  // console.log(queryBuilder);
+  // const result = {
+  //  queryBuilder,
+  //  pageNumber,
+  //  pageSize,
+  //  orderBy,
+  //  orderByPropertyName,
+  // };
+  // return result;
  }
  async getStudent(collegeId: string): Promise<Student> {
   const queryBuilder = this.createQueryBuilder('s');

@@ -1,4 +1,4 @@
-import { Repository, SelectQueryBuilder } from 'typeorm';
+import { Repository, SelectQueryBuilder, UpdateResult } from 'typeorm';
 import { IBaseService } from './i.base.service';
 
 export class BaseService<TRepository extends Repository<TEntity>, TEntity>
@@ -18,9 +18,12 @@ export class BaseService<TRepository extends Repository<TEntity>, TEntity>
   return await this.repository.save(doc);
  }
 
- async updateById(id: number | string, record: TEntity): Promise<TEntity> {
-  await this.repository.update(id, record as TEntity);
-  return await this.repository.findOne(id);
+ async updateById(
+  id: number | string,
+  record: TEntity,
+ ): Promise<UpdateResult> {
+  return await this.repository.update(id, record as TEntity);
+  // return await this.repository.findOne(id);
  }
 
  async deleteById(id: number | string): Promise<string> {

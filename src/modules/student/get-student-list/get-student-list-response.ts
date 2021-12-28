@@ -1,5 +1,5 @@
-import { StudentListBase } from "../getList-student-base";
+import { StudentListBase } from '../getList-student-base';
 
-export class GetStudentlistListResponse {
+export class GetStudentListResponse {
  items: StudentListBase[];
 }

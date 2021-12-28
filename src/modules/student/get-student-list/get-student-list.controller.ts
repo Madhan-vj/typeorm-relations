@@ -1,30 +1,20 @@
-import { Controller, Get, HttpCode, Inject } from '@nestjs/common';
+import { Controller, Get, HttpCode, Inject, Query } from '@nestjs/common';
 import { IStudentService } from 'src/infrastructure/student/i.students.service';
+import { getStudentMapper } from './get-student-list-mapper';
+import { GetStudentListResponse } from './get-student-list-response';
 
 @Controller('Students')
 export class GetStudentController {
   constructor(
     @Inject('IStudentService') private readonly StudentService: IStudentService,
+    private readonly mapper: getStudentMapper,
   ) { }
   @Get()
   @HttpCode(200)
-  async execute(): Promise<any> {
+  async execute(): Promise<Partial<GetStudentListResponse>> {
     const res = await this.StudentService.getStudentlist();
-    const response = res.map((data) => {
-      return {
-        id: data.id,
-        firstName: data.firstName,
-        lastName: data.lastName,
-        gender: data.profile.gender,
-        emailId: data.profile.emailId,
-        rollNumber: data.rollNumber,
-        courseId: data.courseId,
-        collegeName: data.college.collegeName,
-        city: data.profile.city,
-        isActive: data.isActive,
-      };
-    });
-    console.log(response, 'response');
-    return response;
+    const studentData = this.mapper.request(res);
+    console.log(studentData, 'response');
+    return studentData;
   }
 }
