@@ -27,7 +27,6 @@ export class StudentService
     // queryBuilder.leftJoinAndSelect('s.college', 'sc');
     // queryBuilder.leftJoinAndSelect('s.profile', 'sp');
     // return queryBuilder.getMany();
-    console.log(queryBuilder);
     const result = await this.paged(
       queryBuilder,
       pageNumber,

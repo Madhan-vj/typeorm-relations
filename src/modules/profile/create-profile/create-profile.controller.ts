@@ -6,7 +6,7 @@ import { CreateProfileResponse } from './create-profile-response';
 @Controller('Profiles')
 export class CreateProfileController {
   constructor(
-    @Inject('IProfileService') private readonly ProfileService: IProfileService,
+    @Inject('IProfileService') private readonly profileService: IProfileService,
     private readonly mapper: CreateProfileMapper,
   ) { }
   @Post()
@@ -15,7 +15,7 @@ export class CreateProfileController {
     @Body() request: CreateProfileRequest,
   ): Promise<CreateProfileResponse> {
     const profileData = this.mapper.request(request);
-    const result = await this.ProfileService.insert(profileData);
+    const result = await this.profileService.insert(profileData);
     return { id: result.id };
   }
 }

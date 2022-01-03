@@ -8,7 +8,7 @@ import { GetStudentRequest } from './get-student-list.request';
 @Controller('Students')
 export class GetStudentController {
   constructor(
-    @Inject('IStudentService') private readonly StudentService: IStudentService,
+    @Inject('IStudentService') private readonly studentService: IStudentService,
     private readonly mapper: getStudentMapper,
   ) { }
   @Get()
@@ -19,7 +19,7 @@ export class GetStudentController {
     @Query('orderBy') orderBy: SortingDirection = SortingDirection.ASC,
     @Query('pageNumber') orderByPropertyName = 'id',
   ): Promise<Partial<GetStudentListResponse>> {
-    const res = await this.StudentService.getStudentlist(
+    const res = await this.studentService.getStudentlist(
       pageNumber,
       pageSize,
       orderBy,

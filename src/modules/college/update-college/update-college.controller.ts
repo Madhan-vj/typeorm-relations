@@ -15,7 +15,7 @@ import { UpdateCollegeRequest } from './update-college-request';
 @Controller('Colleges')
 export class UpdateCollegeController {
  constructor(
-  @Inject('ICollegeService') private readonly CollegeService: ICollegeService,
+  @Inject('ICollegeService') private readonly collegeService: ICollegeService,
   private readonly mapper: updateCollegeMapper,
  ) { }
  @Put(':id')
@@ -24,10 +24,10 @@ export class UpdateCollegeController {
   @Param('id') id: string,
   @Body() request: UpdateCollegeRequest,
  ): Promise<void> {
-  const college = await this.CollegeService.findOne(id);
+  const college = await this.collegeService.findOne(id);
   if (!college)
    throw new HttpException('college Not Found', HttpStatus.BAD_REQUEST);
   const collegeData = this.mapper.request(id, request);
-  await this.CollegeService.updateById(id, collegeData);
+  await this.collegeService.updateById(id, collegeData);
  }
 }

@@ -24,7 +24,6 @@ export class ProfileService
   orderByPropertyName: string,
  ): Promise<ProfilePagedModel> {
   const queryBuilder = this.createQueryBuilder('p');
-  console.log(queryBuilder);
   const result = await this.paged(
    queryBuilder,
    pageNumber,

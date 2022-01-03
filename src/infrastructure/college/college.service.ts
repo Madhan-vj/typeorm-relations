@@ -24,7 +24,6 @@ export class CollegeService
   orderByPropertyName: string,
  ): Promise<CollegePagedModel> {
   const queryBuilder = this.createQueryBuilder('c');
-  console.log(queryBuilder);
   const result = await this.paged(
    queryBuilder,
    pageNumber,

@@ -7,7 +7,7 @@ import { CreateCollegeResponse } from './create-college-response';
 @Controller('Colleges')
 export class CreateCollegeController {
   constructor(
-    @Inject('ICollegeService') private readonly CollegeService: ICollegeService,
+    @Inject('ICollegeService') private readonly collegeService: ICollegeService,
     private readonly mapper: CreateCollegeMapper,
   ) { }
   @Post()
@@ -16,7 +16,7 @@ export class CreateCollegeController {
     @Body() request: CreateCollegeRequest,
   ): Promise<CreateCollegeResponse> {
     const collegeData = this.mapper.request(request);
-    const result = await this.CollegeService.insert(collegeData);
+    const result = await this.collegeService.insert(collegeData);
     return { id: result.id };
   }
 }

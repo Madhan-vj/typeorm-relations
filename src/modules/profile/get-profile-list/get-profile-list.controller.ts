@@ -7,7 +7,7 @@ import { GetProfileResponse } from './get-profile-list-response';
 @Controller('Profiles')
 export class GetProfileController {
   constructor(
-    @Inject('IProfileService') private readonly ProfileService: IProfileService,
+    @Inject('IProfileService') private readonly profileService: IProfileService,
     private readonly mapper: getProfileMapper,
   ) { }
   @Get()
@@ -18,14 +18,12 @@ export class GetProfileController {
     @Query('orderBy') orderBy: SortingDirection = SortingDirection.ASC,
     @Query('pageNumber') orderByPropertyName = 'emailId',
   ): Promise<Partial<GetProfileResponse>> {
-    const res = await this.ProfileService.getProfilelist(
+    const res = await this.profileService.getProfilelist(
       pageNumber,
       pageSize,
       orderBy,
       orderByPropertyName,
     );
-    // const profileData = this.mapper.request(res);
-    // console.log(res, 'result');
     return res;
   }
 }
