@@ -9,13 +9,13 @@ import { updateCollegeMapper } from './update-college/update-college-mapper';
 import { UpdateCollegeController } from './update-college/update-college.controller';
 
 @Module({
- imports: [DatabaseModule],
- controllers: [
-  GetCollegeController,
-  CreateCollegeController,
-  UpdateCollegeController,
-  DeleteCollegeController,
- ],
- providers: [CreateCollegeMapper, getCollegeMapper, updateCollegeMapper],
+  imports: [DatabaseModule],
+  controllers: [
+    GetCollegeController,
+    CreateCollegeController,
+    UpdateCollegeController,
+    DeleteCollegeController,
+  ],
+  providers: [CreateCollegeMapper, getCollegeMapper, updateCollegeMapper],
 })
 export class CollegeUseCasesModule { }

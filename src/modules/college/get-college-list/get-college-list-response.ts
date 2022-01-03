@@ -1,5 +1,3 @@
-import { GetCollegelistBase } from "../get-college-base";
+import { CollegePagedModel } from 'src/infrastructure/college/college-paged-model';
 
-export class getCollegeResponse {
- items: GetCollegelistBase[];
-}
+export class getCollegeResponse extends CollegePagedModel { }

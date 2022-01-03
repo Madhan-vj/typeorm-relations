@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BaseService } from 'src/common/base.service';
+import { SortingDirection } from 'src/common/sorting-direction';
 import { Repository } from 'typeorm';
+import { CollegePagedModel } from './college-paged-model';
 import { College } from './college.entity';
 import { ICollegeService } from './i.college.service';
 
@@ -15,5 +17,21 @@ export class CollegeService
  ) {
   super(repository);
  }
- queryBuilder = this.createQueryBuilder('c');
+ public async getCollegelist(
+  pageNumber: number,
+  pageSize: number,
+  orderBy: SortingDirection,
+  orderByPropertyName: string,
+ ): Promise<CollegePagedModel> {
+  const queryBuilder = this.createQueryBuilder('c');
+  console.log(queryBuilder);
+  const result = await this.paged(
+   queryBuilder,
+   pageNumber,
+   pageSize,
+   orderBy,
+   orderByPropertyName,
+  );
+  return result;
+ }
 }

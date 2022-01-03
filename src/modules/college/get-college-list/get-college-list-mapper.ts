@@ -4,7 +4,7 @@ import { getCollegeResponse } from './get-college-list-response';
 
 @Injectable()
 export class getCollegeMapper {
-  public request(request: College[]): Partial<getCollegeResponse> {
-    return { items: request };
-  }
+  // public request(request: College[]): Partial<getCollegeResponse> {
+  //   return { items: request };
+  // }
 }

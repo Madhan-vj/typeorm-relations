@@ -1,4 +1,4 @@
-export class PagedResponse {
+export class PagedModel<T> {
  readonly pageNumber: number;
  readonly pageSize: number;
  readonly itemsCount: number;

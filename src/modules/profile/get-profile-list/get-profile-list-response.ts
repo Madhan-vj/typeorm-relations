@@ -1,4 +1,4 @@
+import { ProfilePagedModel } from 'src/infrastructure/profile/profile-paged-model';
 import { GetProfilelistBase } from '../get-profile-base';
-export class getProfileResponse {
- items: GetProfilelistBase[];
+export class GetProfileResponse extends ProfilePagedModel {
 }
