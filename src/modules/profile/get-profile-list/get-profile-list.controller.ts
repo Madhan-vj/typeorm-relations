@@ -1,29 +1,27 @@
 import { Controller, Get, HttpCode, Inject, Query } from '@nestjs/common';
-import { SortingDirection } from 'src/common/sorting-direction';
 import { IProfileService } from 'src/infrastructure/profile/i.profile.service';
-import { getProfileMapper } from './get-profile-list-mapper';
+import { GetProfileMapper } from './get-profile-list-mapper';
 import { GetProfileResponse } from './get-profile-list-response';
+import { GetProfileListRequest } from './get-profile-list.request';
 
 @Controller('Profiles')
 export class GetProfileController {
   constructor(
     @Inject('IProfileService') private readonly profileService: IProfileService,
-    private readonly mapper: getProfileMapper,
+    private readonly mapper: GetProfileMapper,
   ) { }
   @Get()
   @HttpCode(200)
   async execute(
-    @Query('pageNumber') pageNumber = 1,
-    @Query('pageSize') pageSize = 10,
-    @Query('orderBy') orderBy: SortingDirection = SortingDirection.ASC,
-    @Query('pageNumber') orderByPropertyName = 'emailId',
+    @Query() request: GetProfileListRequest,
   ): Promise<Partial<GetProfileResponse>> {
-    const res = await this.profileService.getProfilelist(
-      pageNumber,
-      pageSize,
-      orderBy,
-      orderByPropertyName,
+    const result = await this.profileService.getProfilelist(
+      request.pageNumber,
+      request.pageSize,
+      request.orderBy,
+      request.orderByPropertyName,
     );
-    return res;
+    const response = this.mapper.request(result);
+    return response;
   }
 }

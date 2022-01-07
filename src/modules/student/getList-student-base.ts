@@ -2,11 +2,9 @@ export class StudentListBase {
  id: string;
  firstName!: string;
  lastName!: string;
- gender!: string;
- emailId!: string;
+ isActive!: boolean;
  rollNumber!: string;
  courseId!: string;
- collegeName!: string;
- city!: string;
- isActive!: boolean;
+ collegeId!: string;
+ profileId!: string;
 }

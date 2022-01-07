@@ -9,14 +9,14 @@ import {
  Put,
 } from '@nestjs/common';
 import { IProfileService } from 'src/infrastructure/profile/i.profile.service';
-import { updateProfileMapper } from './update-profile-mapper';
+import { UpdateProfileMapper } from './update-profile-mapper';
 import { UpdateProfileRequest } from './update-profile-request';
 
 @Controller('Profiles')
 export class UpdateProfileController {
  constructor(
   @Inject('IProfileService') private readonly profileService: IProfileService,
-  private readonly mapper: updateProfileMapper,
+  private readonly mapper: UpdateProfileMapper,
  ) { }
  @Put(':id')
  @HttpCode(204)

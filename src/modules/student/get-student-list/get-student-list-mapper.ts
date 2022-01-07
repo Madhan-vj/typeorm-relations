@@ -1,25 +1,29 @@
 import { Injectable } from '@nestjs/common';
-import { Student } from 'src/infrastructure/student/student.entity';
+import { StudentPagedModel } from 'src/infrastructure/student/student-paged-model';
 import { GetStudentListResponse } from './get-student-list-response';
-import { GetStudentRequest } from './get-student-list.request';
 
 @Injectable()
-export class getStudentMapper {
- // public request(request: Student[]): Partial<GetStudentListResponse> {
- //   const response = request.map((data) => {
- //     return {
- //       id: data.id,
- //       firstName: data.firstName,
- //       lastName: data.lastName,
- //       gender: data.profile.gender,
- //       emailId: data.profile.emailId,
- //       rollNumber: data.rollNumber,
- //       courseId: data.courseId,
- //       collegeName: data.college.collegeName,
- //       city: data.profile.city,
- //       isActive: data.isActive,
- //     };
- //   });
- //   return { items: response };
- // }
+export class GetStudentMapper {
+ public request(request: StudentPagedModel): Partial<GetStudentListResponse> {
+  return {
+   pageNumber: request.pageNumber,
+   pageSize: request.pageSize,
+   itemsCount: request.itemsCount,
+   orderBy: request.orderBy,
+   orderByPropertyName: request.orderByPropertyName,
+   pageCount: request.pageCount,
+   items: request.items.map((data) => {
+    return {
+     id: data.id,
+     firstName: data.firstName,
+     lastName: data.lastName,
+     rollNumber: data.rollNumber,
+     courseId: data.courseId,
+     isActive: data.isActive,
+     collegeId: data.collegeId,
+     profileId: data.profileId,
+    };
+   }),
+  };
+ }
 }
