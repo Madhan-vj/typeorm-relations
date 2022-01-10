@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { BaseService } from 'src/common/base.service';
 import { SortingDirection } from 'src/common/sorting-direction';
 import { Repository } from 'typeorm';
+import { College } from '../college/college.entity';
 import { IStudentService } from './i.students.service';
 import { StudentPagedModel } from './student-paged-model';
 import { Student } from './student.entity';
@@ -24,9 +25,12 @@ export class StudentService
     orderByPropertyName: string,
   ): Promise<StudentPagedModel> {
     const queryBuilder = this.createQueryBuilder('s');
-    // queryBuilder.leftJoinAndSelect('s.college', 'sc');
-    // queryBuilder.leftJoinAndSelect('s.profile', 'sp');
-    // return queryBuilder.getMany();
+    queryBuilder.leftJoinAndSelect(`s.college`, 'sc');
+    // queryBuilder.leftJoinAndSelect(`sc.student`, 'scs');
+    // queryBuilder.where('s.collegeId = sc.id');
+    queryBuilder.leftJoinAndSelect('s.profile', 'sp');
+    queryBuilder.getMany();
+    // console.log(queryBuilder, '<=======');
     const result = await this.paged(
       queryBuilder,
       pageNumber,
@@ -38,6 +42,8 @@ export class StudentService
   }
   async getStudent(collegeId: string): Promise<Student> {
     const queryBuilder = this.createQueryBuilder('s');
+    queryBuilder.leftJoinAndSelect(`s.college`, 'sc');
+    queryBuilder.where('s.collegeId = sc.id');
     return queryBuilder.getOne();
   }
 }

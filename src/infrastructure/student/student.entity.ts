@@ -34,6 +34,7 @@ export class Student {
  profile: Profile;
 
  @ManyToOne(() => College, (college) => college.student)
+ @JoinColumn()
  college: College;
 
  @Column()

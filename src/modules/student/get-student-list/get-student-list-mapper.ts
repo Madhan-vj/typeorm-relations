@@ -17,11 +17,15 @@ export class GetStudentMapper {
      id: data.id,
      firstName: data.firstName,
      lastName: data.lastName,
+     gender: data.profile.gender,
+     emailId: data.profile.emailId,
      rollNumber: data.rollNumber,
      courseId: data.courseId,
      isActive: data.isActive,
-     collegeId: data.collegeId,
-     profileId: data.profileId,
+     city: data.profile.city,
+     // collegeId: data.collegeId,
+     // profileId: data.profileId,
+     collegeName: data.college.collegeName,
     };
    }),
   };
