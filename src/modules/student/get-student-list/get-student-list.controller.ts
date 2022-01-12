@@ -18,6 +18,7 @@ export class GetStudentController {
   ): Promise<Partial<GetStudentListResponse>> {
     const filter: StudentFilter = {
       collegeId: request.collegeId,
+      profileId: request.profileId
     };
     const result = await this.studentService.getStudentlist(
       request.pageNumber,

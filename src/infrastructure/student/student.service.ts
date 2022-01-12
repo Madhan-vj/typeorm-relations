@@ -30,9 +30,15 @@ export class StudentService
     queryBuilder.leftJoinAndSelect(`s.college`, 'sc');
     queryBuilder.leftJoinAndSelect('s.profile', 'sp');
     if (filter.collegeId)
-      queryBuilder.where('s.collegeId = :collegeId', {
+      queryBuilder.andWhere('s.collegeId = :collegeId', {
         collegeId: filter.collegeId,
       });
+
+    if (filter.profileId)
+      queryBuilder.andWhere('s.profileId = :profileId', {
+        profileId: filter.profileId,
+      });
+
     const result = await this.paged(
       queryBuilder,
       pageNumber,
