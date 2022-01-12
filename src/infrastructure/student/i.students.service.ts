@@ -1,5 +1,6 @@
 import { IBaseService } from 'src/common/i.base.service';
 import { SortingDirection } from 'src/common/sorting-direction';
+import { StudentFilter } from './student-filter';
 import { StudentPagedModel } from './student-paged-model';
 import { Student } from './student.entity';
 
@@ -10,6 +11,7 @@ export interface IStudentService extends IBaseService<Student> {
   pageSize: number,
   orderBy: SortingDirection,
   orderByPropertyName: string,
+  filter: StudentFilter,
  ): Promise<StudentPagedModel>;
  getStudent(studentid: string): Promise<Student>;
 }

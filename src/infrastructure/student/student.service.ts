@@ -5,6 +5,7 @@ import { SortingDirection } from 'src/common/sorting-direction';
 import { Repository } from 'typeorm';
 import { College } from '../college/college.entity';
 import { IStudentService } from './i.students.service';
+import { StudentFilter } from './student-filter';
 import { StudentPagedModel } from './student-paged-model';
 import { Student } from './student.entity';
 
@@ -23,14 +24,15 @@ export class StudentService
     pageSize: number,
     orderBy: SortingDirection,
     orderByPropertyName: string,
+    filter: StudentFilter,
   ): Promise<StudentPagedModel> {
     const queryBuilder = this.createQueryBuilder('s');
     queryBuilder.leftJoinAndSelect(`s.college`, 'sc');
-    // queryBuilder.leftJoinAndSelect(`sc.student`, 'scs');
-    // queryBuilder.where('s.collegeId = sc.id');
     queryBuilder.leftJoinAndSelect('s.profile', 'sp');
-    queryBuilder.getMany();
-    // console.log(queryBuilder, '<=======');
+    if (filter.collegeId)
+      queryBuilder.where('s.collegeId = :collegeId', {
+        collegeId: filter.collegeId,
+      });
     const result = await this.paged(
       queryBuilder,
       pageNumber,
