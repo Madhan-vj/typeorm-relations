@@ -16,7 +16,7 @@ export class GetStudentCountMapper {
         return {
           id: data.id,
           collegeName: data.collegeName,
-          NumberOfStudents: data.student.length,
+          numberOfStudents: data.student.length,
         };
       }),
     };

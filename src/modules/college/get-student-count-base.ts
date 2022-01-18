@@ -3,5 +3,5 @@ import { CollegeBase } from './college-base';
 
 export class GetStudentCountBase extends CollegeBase {
  id: string;
- NumberOfStudents: number;
+ numberOfStudents: number;
 }
