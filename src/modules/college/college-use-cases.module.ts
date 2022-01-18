@@ -5,6 +5,8 @@ import { CreateCollegeController } from './create-college/create-college.control
 import { DeleteCollegeController } from './delete-college/delete-college.controller';
 import { GetCollegeMapper } from './get-college-list/get-college-list-mapper';
 import { GetCollegeController } from './get-college-list/get-college-list.controller';
+import { GetStudentCountMapper } from './get-students-count/get-student-count-mapper';
+import { GetStudentCountController } from './get-students-count/get-student-count.controller';
 import { UpdateCollegeMapper } from './update-college/update-college-mapper';
 import { UpdateCollegeController } from './update-college/update-college.controller';
 
@@ -15,7 +17,13 @@ import { UpdateCollegeController } from './update-college/update-college.control
     CreateCollegeController,
     UpdateCollegeController,
     DeleteCollegeController,
+    GetStudentCountController,
   ],
-  providers: [CreateCollegeMapper, GetCollegeMapper, UpdateCollegeMapper],
+  providers: [
+    CreateCollegeMapper,
+    GetCollegeMapper,
+    UpdateCollegeMapper,
+    GetStudentCountMapper,
+  ],
 })
 export class CollegeUseCasesModule { }

@@ -11,4 +11,10 @@ export interface ICollegeService extends IBaseService<College> {
   orderBy: SortingDirection,
   orderByPropertyName: string,
  ): Promise<CollegePagedModel>;
+ getStudentCountlist(
+  pageNumber: number,
+  pageSize: number,
+  orderBy: SortingDirection,
+  orderByPropertyName: string,
+ ): Promise<CollegePagedModel>;
 }

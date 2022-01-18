@@ -33,4 +33,21 @@ export class CollegeService
   );
   return result;
  }
+ public async getStudentCountlist(
+  pageNumber: number,
+  pageSize: number,
+  orderBy: SortingDirection,
+  orderByPropertyName: string,
+ ): Promise<CollegePagedModel> {
+  const queryBuilder = this.createQueryBuilder('c');
+  queryBuilder.leftJoinAndSelect(`c.student`, 'cs');
+  const result = await this.paged(
+   queryBuilder,
+   pageNumber,
+   pageSize,
+   orderBy,
+   orderByPropertyName,
+  );
+  return result;
+ }
 }
