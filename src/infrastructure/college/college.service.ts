@@ -40,7 +40,10 @@ export class CollegeService
   orderByPropertyName: string,
  ): Promise<CollegePagedModel> {
   const queryBuilder = this.createQueryBuilder('c');
+  // queryBuilder.addSelect(`COUNT(c.student) AS numberOfStudents`);
   queryBuilder.leftJoinAndSelect(`c.student`, 'cs');
+  queryBuilder.loadRelationCountAndMap('c.numberOfStudents', 'c.student');
+  queryBuilder.getMany();
   const result = await this.paged(
    queryBuilder,
    pageNumber,

@@ -21,7 +21,6 @@ export class GetStudentCountController {
    request.orderBy,
    request.orderByPropertyName,
   );
-  console.log(result, "rezzz")
   const response = this.mapper.request(result);
   return response;
  }
