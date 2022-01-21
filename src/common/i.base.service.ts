@@ -15,4 +15,11 @@ export interface IBaseService<T> {
   orderBy: SortingDirection,
   orderByPropertyName: string,
  ): Promise<PagedModel<T>>;
+ pagedRaw(
+  queryBuilder: SelectQueryBuilder<T>,
+  pageNumber: number,
+  pageSize: number,
+  orderBy: SortingDirection,
+  orderByPropertyName: string,
+ ): Promise<PagedModel<any>>;
 }

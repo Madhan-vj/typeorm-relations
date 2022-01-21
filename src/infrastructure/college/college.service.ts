@@ -6,7 +6,7 @@ import { Repository } from 'typeorm';
 import { CollegePagedModel } from './college-paged-model';
 import { College } from './college.entity';
 import { ICollegeService } from './i.college.service';
-import { getRepository } from 'typeorm';
+import { getManager } from 'typeorm';
 import { Student } from '../student/student.entity';
 @Injectable()
 export class CollegeService
@@ -41,10 +41,15 @@ export class CollegeService
   orderByPropertyName: string,
  ): Promise<CollegePagedModel> {
   // SELECT `typeorm-relations`.college.id,`typeorm-relations`.college.collegeName,COUNT(`typeorm-relations`.student.id) AS numberOfStudents FROM `typeorm-relations`.college LEFT JOIN `typeorm-relations`.student ON `typeorm-relations`.college.id = `typeorm-relations`.student.collegeId GROUP BY `typeorm-relations`.college.collegeName
-  const queryBuilder = this.createQueryBuilder('c');
-  queryBuilder.leftJoinAndSelect('c.student', 'cs');
-  queryBuilder.addSelect('COUNT("cs.profileId") AS numberOfStudents');
-  queryBuilder.groupBy('c.id');
+  const queryBuilder = await getManager()
+   .createQueryBuilder(College, 'c')
+   .leftJoin('c.student', 'cs')
+   .select('c.id', 'id')
+   .addSelect('c.collegeName', 'collegeName')
+   .addSelect('COUNT(DISTINCT(cs.profileId)) as numberOfStudents')
+   .groupBy('c.id');
+  // queryBuilder.addSelect('COUNT(cs.profileId) AS numberOfStudents');
+  // queryBuilder.groupBy('c.id');
   // await queryBuilder.where('cs.collegeId= :id', { id: 'c.id' });
   // queryBuilder.groupBy('c.collegeName');
   // queryBuilder.loadRelationCountAndMap('c.numberOfStudents', 'c.student');
@@ -55,9 +60,9 @@ export class CollegeService
   //  .from(College, 'c')
   //  .leftJoin(Student, 's');
   // .groupBy('c.collegeName')
-  // .getRawMany();
+  // .getQuery();
   // console.log(user, 'userzz');
-  const result = await this.paged(
+  const result = await this.pagedRaw(
    queryBuilder,
    pageNumber,
    pageSize,

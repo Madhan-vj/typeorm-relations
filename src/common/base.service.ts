@@ -56,6 +56,32 @@ export class BaseService<TRepository extends Repository<TEntity>, TEntity>
 
     return pagedResponse;
   }
+  async pagedRaw(
+    queryBuilder: SelectQueryBuilder<TEntity>,
+    pageNumber: number,
+    pageSize: number,
+    orderBy: SortingDirection,
+    orderByPropertyName: string
+  ): Promise<PagedModel<any>> {
+    const items = await queryBuilder
+      .offset((pageNumber - 1) * pageSize)
+      .limit(pageSize)
+      .orderBy(orderByPropertyName, orderBy)
+      .getRawMany();
+
+    const itemsCount = await queryBuilder.getCount();
+
+    const pagedResponse = new PagedModel<any>({
+      pageNumber,
+      pageSize,
+      orderBy,
+      orderByPropertyName,
+      itemsCount,
+      items,
+    });
+
+    return pagedResponse;
+  }
   createQueryBuilder(alias = ''): SelectQueryBuilder<TEntity> {
     return this.repository.createQueryBuilder(alias);
   }
