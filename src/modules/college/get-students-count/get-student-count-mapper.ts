@@ -1,10 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { CollegePagedModel } from 'src/infrastructure/college/college-paged-model';
+import { CollegeRawPagedModel } from 'src/infrastructure/college/college-raw-paged-model';
 import { GetStudentCountResponse } from './get-student-count-response';
 
 @Injectable()
 export class GetStudentCountMapper {
-  public request(request: CollegePagedModel): Partial<GetStudentCountResponse> {
+  public request(
+    request: CollegeRawPagedModel,
+  ): Partial<GetStudentCountResponse> {
     return {
       pageNumber: request.pageNumber,
       pageSize: request.pageSize,

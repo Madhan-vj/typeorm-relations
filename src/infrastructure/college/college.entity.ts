@@ -11,6 +11,4 @@ export class College {
 
  @OneToMany(() => Student, (student) => student.college)
  student: Student[];
-
- numberOfStudents: number;
 }
