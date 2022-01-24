@@ -1,25 +1,20 @@
+import { AutomapperProfile, InjectMapper } from '@automapper/nestjs';
+import { Mapper } from '@automapper/types';
 import { Injectable } from '@nestjs/common';
 import { ProfilePagedModel } from 'src/infrastructure/profile/profile-paged-model';
+import { Profile } from 'src/infrastructure/profile/profile.entity';
+import { GetProfilelistBase } from '../get-profile-base';
 import { GetProfileResponse } from './get-profile-list-response';
 
 @Injectable()
-export class GetProfileMapper {
- public request(request: ProfilePagedModel): Partial<GetProfileResponse> {
-  return {
-   pageNumber: request.pageNumber,
-   pageSize: request.pageSize,
-   itemsCount: request.itemsCount,
-   orderBy: request.orderBy,
-   orderByPropertyName: request.orderByPropertyName,
-   pageCount: request.pageCount,
-   items: request.items.map((data) => {
-    return {
-     id: data.id,
-     gender: data.gender,
-     emailId: data.emailId,
-     city: data.city,
-    };
-   }),
+export class GetProfileMapper extends AutomapperProfile {
+ constructor(@InjectMapper() mapper: Mapper) {
+  super(mapper);
+ }
+ mapProfile() {
+  return (mapper: Mapper) => {
+   mapper.createMap(Profile, GetProfilelistBase);
+   mapper.createMap(ProfilePagedModel, GetProfileResponse);
   };
  }
 }

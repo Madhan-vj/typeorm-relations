@@ -1,9 +1,21 @@
+import { ignore } from '@automapper/core';
+import { AutomapperProfile, InjectMapper } from '@automapper/nestjs';
+import { Mapper } from '@automapper/types';
 import { Injectable } from '@nestjs/common';
-import { CollegeBase } from '../college-base';
+import { College } from 'src/infrastructure/college/college.entity';
+import { UpdateCollegeRequest } from './update-college-request';
 
 @Injectable()
-export class UpdateCollegeMapper {
-  public request(id: string, request: CollegeBase): Partial<CollegeBase> {
-    return request;
+export class UpdateCollegeMapper extends AutomapperProfile {
+  constructor(@InjectMapper() mapper: Mapper) {
+    super(mapper);
+  }
+
+  mapProfile() {
+    return (mapper: Mapper) => {
+      mapper
+        .createMap(UpdateCollegeRequest, College)
+        .forMember((destination) => destination.id, ignore());
+    };
   }
 }

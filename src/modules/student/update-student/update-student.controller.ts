@@ -1,3 +1,5 @@
+import { InjectMapper } from '@automapper/nestjs';
+import { Mapper } from '@automapper/types';
 import {
  Body,
  Controller,
@@ -9,6 +11,7 @@ import {
  Put,
 } from '@nestjs/common';
 import { IStudentService } from 'src/infrastructure/student/i.students.service';
+import { Student } from 'src/infrastructure/student/student.entity';
 import { updateStudentMapper } from './update-student-mapper';
 import { UpdateStudentRequest } from './update-student-request';
 
@@ -16,7 +19,7 @@ import { UpdateStudentRequest } from './update-student-request';
 export class UpdateStudentController {
  constructor(
   @Inject('IStudentService') private readonly studentService: IStudentService,
-  private readonly mapper: updateStudentMapper,
+  @InjectMapper() private mapper: Mapper,
  ) { }
  @Put(':id')
  @HttpCode(204)
@@ -27,7 +30,8 @@ export class UpdateStudentController {
   const student = await this.studentService.findOne(id);
   if (!student)
    throw new HttpException('Profile Not Found', HttpStatus.BAD_REQUEST);
-  const studentData = this.mapper.request(id, request);
+  const studentData = this.mapper.map(request, Student, UpdateStudentRequest);
+  studentData.setId(id);
   await this.studentService.updateById(id, studentData);
  }
 }

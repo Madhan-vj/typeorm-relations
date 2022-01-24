@@ -1,6 +1,8 @@
+import { InjectMapper } from '@automapper/nestjs';
+import { Mapper } from '@automapper/types';
 import { Controller, Get, HttpCode, Inject, Query } from '@nestjs/common';
 import { IProfileService } from 'src/infrastructure/profile/i.profile.service';
-import { GetProfileMapper } from './get-profile-list-mapper';
+import { ProfilePagedModel } from 'src/infrastructure/profile/profile-paged-model';
 import { GetProfileResponse } from './get-profile-list-response';
 import { GetProfileListRequest } from './get-profile-list.request';
 
@@ -8,7 +10,7 @@ import { GetProfileListRequest } from './get-profile-list.request';
 export class GetProfileController {
   constructor(
     @Inject('IProfileService') private readonly profileService: IProfileService,
-    private readonly mapper: GetProfileMapper,
+    @InjectMapper() private mapper: Mapper,
   ) { }
   @Get()
   @HttpCode(200)
@@ -21,7 +23,11 @@ export class GetProfileController {
       request.orderBy,
       request.orderByPropertyName,
     );
-    const response = this.mapper.request(result);
+    const response = this.mapper.map(
+      result,
+      GetProfileResponse,
+      ProfilePagedModel,
+    );
     return response;
   }
 }

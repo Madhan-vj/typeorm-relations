@@ -1,27 +1,20 @@
+import { AutomapperProfile, InjectMapper } from '@automapper/nestjs';
+import { Mapper } from '@automapper/types';
 import { Injectable } from '@nestjs/common';
-import { CollegePagedModel } from 'src/infrastructure/college/college-paged-model';
+import { CollegeRaw } from 'src/infrastructure/college/college-raw';
 import { CollegeRawPagedModel } from 'src/infrastructure/college/college-raw-paged-model';
+import { GetStudentCountBase } from '../get-student-count-base';
 import { GetStudentCountResponse } from './get-student-count-response';
 
 @Injectable()
-export class GetStudentCountMapper {
-  public request(
-    request: CollegeRawPagedModel,
-  ): Partial<GetStudentCountResponse> {
-    return {
-      pageNumber: request.pageNumber,
-      pageSize: request.pageSize,
-      itemsCount: request.itemsCount,
-      orderBy: request.orderBy,
-      orderByPropertyName: request.orderByPropertyName,
-      pageCount: request.pageCount,
-      items: request.items.map((data) => {
-        return {
-          id: data.id,
-          collegeName: data.collegeName,
-          numberOfStudents: data.numberOfStudents,
-        };
-      }),
+export class GetStudentCountMapper extends AutomapperProfile {
+  constructor(@InjectMapper() mapper: Mapper) {
+    super(mapper);
+  }
+  mapProfile() {
+    return (mapper: Mapper) => {
+      mapper.createMap(CollegeRaw, GetStudentCountBase);
+      mapper.createMap(CollegeRawPagedModel, GetStudentCountResponse);
     };
   }
 }

@@ -1,6 +1,8 @@
+import { InjectMapper } from '@automapper/nestjs';
+import { Mapper } from '@automapper/types';
 import { Controller, Get, HttpCode, Inject, Query } from '@nestjs/common';
+import { CollegeRawPagedModel } from 'src/infrastructure/college/college-raw-paged-model';
 import { ICollegeService } from 'src/infrastructure/college/i.college.service';
-import { GetStudentCountMapper } from './get-student-count-mapper';
 import { GetStudentCountResponse } from './get-student-count-response';
 import { GetStudentCountRequest } from './get-student-count.request';
 
@@ -8,7 +10,7 @@ import { GetStudentCountRequest } from './get-student-count.request';
 export class GetStudentCountController {
  constructor(
   @Inject('ICollegeService') private readonly collegeService: ICollegeService,
-  private readonly mapper: GetStudentCountMapper,
+  @InjectMapper() private mapper: Mapper,
  ) { }
  @Get()
  @HttpCode(200)
@@ -21,8 +23,11 @@ export class GetStudentCountController {
    request.orderBy,
    request.orderByPropertyName,
   );
-  console.log(result, "rezzz")
-  const response = this.mapper.request(result);
+  const response = this.mapper.map(
+   result,
+   GetStudentCountResponse,
+   CollegeRawPagedModel,
+  );
   return response;
  }
 }

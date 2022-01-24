@@ -1,3 +1,4 @@
+import { AutoMap } from '@automapper/classes';
 import {
  Column,
  Entity,
@@ -11,21 +12,27 @@ import { Profile } from '../profile/profile.entity';
 
 @Entity()
 export class Student {
+ @AutoMap()
  @PrimaryGeneratedColumn('uuid')
  id: string;
 
+ @AutoMap()
  @Column()
  firstName!: string;
 
+ @AutoMap()
  @Column()
  lastName!: string;
 
+ @AutoMap()
  @Column({ default: true })
  isActive!: boolean;
 
+ @AutoMap()
  @Column()
  rollNumber!: string;
 
+ @AutoMap()
  @Column()
  courseId!: string;
 
@@ -37,9 +44,15 @@ export class Student {
  @JoinColumn()
  college: College;
 
+ @AutoMap()
  @Column()
  collegeId!: string;
 
+ @AutoMap()
  @Column()
  profileId!: string;
+
+ public setId(id: string) {
+  this.id = id;
+ }
 }
